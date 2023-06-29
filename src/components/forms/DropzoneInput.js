@@ -119,7 +119,7 @@ export default function DropzoneInput({
 
   return (
     <div>
-      <p className="block text-sm font-medium" htmlFor={id}>
+      <p className="block text-sm text-gray-700" htmlFor={id}>
         {label}
       </p>
 
@@ -146,7 +146,7 @@ export default function DropzoneInput({
           render={({ field }) => (
             <>
               <div
-                className="mt-1 border border-gray-300 focus:ring-dark-400 group focus:outline-none focus:border-gray-300 focus:ring-gray-300"
+                className="mt-1 border border-gray-300 rounded-md focus:ring-dark-400 group focus:outline-none focus:border-gray-300 focus:ring-gray-300"
                 {...getRootProps()}
                 ref={dropzoneRef}
               >
@@ -174,19 +174,19 @@ export default function DropzoneInput({
                         strokeLinejoin="round"
                       />
                     </svg>
-                    <p className="text-gray-500">
-                      Drag and drop file here, or click to choose file
+                    <p className="block text-xs text-gray-700">
+                      Seret dan lepas file di sini, atau klik untuk memilih file
                     </p>
                     <p className="text-xs text-gray-500">{`${
                       maxFiles - (files?.length || 0)
-                    } file(s) remaining`}
+                    } file tersisa`}
                     </p>
                   </div>
                 </div>
               </div>
 
               {!(!hideError && error) && helperText && (
-                <p color="secondary" className="mt-1 text-xs">
+                <p color="secondary" className="mt-1 text-xs text-gray-500">
                   {helperText}
                 </p>
               )}

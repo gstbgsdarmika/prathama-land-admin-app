@@ -28,9 +28,11 @@ const Button = React.forwardRef(
       isLoading,
       variant = 'primary',
       size = 'base',
+      centerIcon: CenterIcon,
       leftIcon: LeftIcon,
       rightIcon: RightIcon,
       leftIconClassName,
+      centerIconClassName,
       rightIconClassName,
       ...rest
     },
@@ -80,6 +82,13 @@ const Button = React.forwardRef(
               'active:bg-gray-200',
               'disabled:border-green-500 disabled:bg-gray-400 disabled:text-white',
               'focus-visible:ring-green-400',
+            ],
+            variant === 'blue' && [
+              'bg-blue-600 text-white',
+              'hover:bg-blue-700 hover:text-white',
+              'active:bg-blue-800',
+              'disabled:border-blue-400 disabled:bg-gray-400',
+              'focus-visible:ring-blue-400',
             ],
             variant === 'danger' && [
               'bg-red-500 text-white',
@@ -145,6 +154,20 @@ const Button = React.forwardRef(
             <LeftIcon
               size="1em"
               className={clsx('text-base', leftIconClassName)}
+            />
+          </div>
+        )}
+        {CenterIcon && (
+          <div
+            className={clsx([
+              size === 'lg' && 'm-auto',
+              size === 'base' && 'm-auto',
+              size === 'sm' && 'm-auto',
+            ])}
+          >
+            <CenterIcon
+              size="1.25rem"
+              className={clsx('text-base', centerIconClassName)}
             />
           </div>
         )}

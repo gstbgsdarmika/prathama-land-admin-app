@@ -27,7 +27,7 @@ export default function Input({
   return (
     <div className={containerClassName}>
       {withLabel && (
-        <p className="block text-base text-gray-800" htmlFor={id}>
+        <p className="block text-sm text-gray-700" htmlFor={id}>
           {label}
         </p>
       )}

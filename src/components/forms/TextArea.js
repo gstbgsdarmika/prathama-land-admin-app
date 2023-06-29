@@ -23,7 +23,7 @@ export default function TextArea({
   return (
     <div className={containerClassName}>
       {withLabel && (
-        <p className="block text-sm font-medium" htmlFor={id}>
+        <p className="block text-sm text-gray-700" htmlFor={id}>
           {label}
         </p>
       )}

@@ -9,3 +9,21 @@
 body {
   font-family: 'Inter', sans-serif;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+}
+
+.pagination li {
+  margin: 5px;
+  padding: 2px 8px;
+  cursor: pointer;
+}
+
+.pagination li.active {
+  background-color: #3B82F6;
+  border-radius: 4px;
+  color: white;
+}

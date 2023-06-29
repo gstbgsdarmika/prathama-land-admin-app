@@ -38,7 +38,7 @@ function Dropdown({ title, icon, content }) {
       </button>
       <ul
         ref={dropdownRef}
-        className="overflow-hidden transition-all transform-gpu"
+        className="overflow-hidden transition-all transform-gpu hover:space-y-2"
         style={{
           maxHeight: isOpen ? '20rem' : '0',
           opacity: isOpen ? '1' : '0',
@@ -51,7 +51,7 @@ function Dropdown({ title, icon, content }) {
             key={item.id || index}
             to={`/${item.title.toLowerCase().replace(/\s/g, '-')}`}
             title={item.title}
-            childrenClassName="ml-9"
+            childrenClassName="ml-9 hover:m-"
           />
         ))}
       </ul>
