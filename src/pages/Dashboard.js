@@ -4,6 +4,9 @@ import { HiOutlineFilter } from 'react-icons/hi';
 import DatePicker from '../components/forms/Datepicker';
 import Button from '../components/buttons/Button';
 import Card from '../components/cards/Card';
+import SimpleBarChart from '../components/chart/SimpleBarChart';
+import SimplePieChart from '../components/chart/SimplePieChart';
+import TableDashboard from '../components/table/TableDashboard';
 
 function Dashboard() {
   const methods = useForm();
@@ -49,6 +52,14 @@ function Dashboard() {
           percentage="5.7"
           isPositive
         />
+      </div>
+      <div className="grid gap-4 mt-10 md:grid-cols-[1fr,_19.5rem]">
+        <SimpleBarChart />
+        <SimplePieChart />
+      </div>
+
+      <div className="mt-10">
+        <TableDashboard />
       </div>
     </div>
   );

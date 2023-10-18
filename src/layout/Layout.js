@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
 import { usePathname } from '../utils/useLocation';
@@ -7,8 +7,8 @@ function Layout({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(true);
   const pathName = usePathname();
 
-  React.useEffect(() => {
-    setIsSidebarOpen(false);
+  useEffect(() => {
+    setIsSidebarOpen(true);
   }, [pathName]);
 
   return (
@@ -18,7 +18,7 @@ function Layout({ children }) {
         <header className="sticky top-0 z-10">
           <Navbar setIsSidebarOpen={setIsSidebarOpen} />
         </header>
-        <main className="flex-grow px-6 py-8 bg-gray-100">{children}</main>
+        <main className="flex-grow px-4 py-4 bg-gray-100 md:py-8 md:px-6">{children}</main>
       </div>
     </div>
   );

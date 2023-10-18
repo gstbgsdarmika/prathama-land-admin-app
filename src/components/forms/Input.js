@@ -27,7 +27,7 @@ export default function Input({
   return (
     <div className={containerClassName}>
       {withLabel && (
-        <p className="block text-base text-gray-800" htmlFor={id}>
+        <p className="block text-sm text-gray-700" htmlFor={id}>
           {label}
         </p>
       )}
@@ -75,12 +75,12 @@ export default function Input({
         )}
       </div>
       {!(!hideError && error) && helperText && (
-        <p color="secondary" className="mt-1 text-xs">
+        <p color="secondary" className="mt-1 text-xs text-red-500">
           {helperText}
         </p>
       )}
       {!hideError && error && (
-        <p color="danger" className="mt-1 text-xs">
+        <p color="danger" className="mt-1 text-xs text-red-500">
           {error?.message?.toString()}
         </p>
       )}

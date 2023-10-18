@@ -4,7 +4,6 @@ import {
   HiOutlineViewGrid,
   HiOutlineViewGridAdd,
   HiOutlineShoppingCart,
-  HiOutlineQuestionMarkCircle,
   HiOutlineLogout,
   HiXCircle,
 } from 'react-icons/hi';
@@ -37,36 +36,23 @@ function Sidebar({ isSidebarOpen, setIsSidebarOpen }) {
             icon={HiOutlineViewGrid}
           />
           <Dropdown
-            title="Properties"
+            title="Properti"
             icon={<HiOutlineViewGridAdd className="w-6 h-6 text-white" />}
             content={[
-              { id: 1, title: 'Property list' },
-              { id: 2, title: 'New property' },
+              { id: 1, title: 'Daftar properti' },
+              { id: 2, title: 'Tambah properti' },
             ]}
           />
           <Dropdown
-            title="Reservations"
+            title="Pemesanan"
             icon={<HiOutlineShoppingCart className="w-6 h-6 text-white" />}
             content={[
-              { id: 4, title: 'Reservations List' },
-              { id: 5, title: 'Reservation Reports' },
-              { id: 6, title: 'Payment Integration' },
-            ]}
-          />
-          <Dropdown
-            title="Help Center"
-            icon={
-              <HiOutlineQuestionMarkCircle className="w-6 h-6 text-white" />
-            }
-            content={[
-              { id: 4, title: 'Reservations List' },
-              { id: 5, title: 'Reservation Reports' },
-              { id: 6, title: 'Payment Integration' },
+              { id: 1, title: 'Daftar Pemesanan' },
             ]}
           />
           <li>
             <Link
-              to="/"
+              to="/login"
               className="flex items-center p-2 text-white rounded-lg hover:bg-green-700"
             >
               <HiOutlineLogout className="w-6 h-6 text-white" />
@@ -79,18 +65,14 @@ function Sidebar({ isSidebarOpen, setIsSidebarOpen }) {
       <div className="absolute inset-0 block w-screen h-screen bg-black/70 md:hidden">
         {/* toggle button */}
         <div className="absolute top-4 left-64 ">
-
           <IconButton
             onClick={() => setIsSidebarOpen(false)}
             icon={HiXCircle}
             color="white"
             size="6"
           />
-
         </div>
-
       </div>
-
     </aside>
   );
 }

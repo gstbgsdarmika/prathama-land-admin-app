@@ -23,7 +23,7 @@ export default function TextArea({
   return (
     <div className={containerClassName}>
       {withLabel && (
-        <p className="block text-sm font-medium" htmlFor={id}>
+        <p className="block text-sm text-gray-700" htmlFor={id}>
           {label}
         </p>
       )}
@@ -53,7 +53,7 @@ export default function TextArea({
         </p>
       )}
       {!hideError && error && (
-        <p color="danger" className="mt-1 text-xs">
+        <p color="danger" className="mt-1 text-xs text-red-500">
           {error?.message?.toString()}
         </p>
       )}
