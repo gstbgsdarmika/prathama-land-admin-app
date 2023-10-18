@@ -177,8 +177,8 @@ function TableBodyOrders(props) {
           <td className="px-2 text-xs md:py-2 md:text-sm">
             {order.payment}
           </td>
-          <td className="px-2 text-xs md:py-2 md:text-sm">
-            <div className={`px-2 py-1 text-white font-semibold rounded-full ${getStatusColor(order.status)}`}>
+          <td className="px-2 text-xs text-center md:py-2 md:text-sm">
+            <div className={`px-1 py-1 text-white rounded-lg ${getStatusColor(order.status)}`}>
               {order.status}
             </div>
           </td>

@@ -53,7 +53,7 @@ export default function TextArea({
         </p>
       )}
       {!hideError && error && (
-        <p color="danger" className="mt-1 text-xs">
+        <p color="danger" className="mt-1 text-xs text-red-500">
           {error?.message?.toString()}
         </p>
       )}

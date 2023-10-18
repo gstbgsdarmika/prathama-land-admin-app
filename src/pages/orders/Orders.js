@@ -25,7 +25,7 @@ function Orders() {
             <Input
               id="search"
               className="text-gray-300"
-              placeholder="Cari pesanan..."
+              placeholder="Cari pesanan"
               validation={{ required: 'Search must be filled' }}
               leftIcon={HiOutlineSearch}
             />

@@ -75,12 +75,12 @@ export default function Input({
         )}
       </div>
       {!(!hideError && error) && helperText && (
-        <p color="secondary" className="mt-1 text-xs">
+        <p color="secondary" className="mt-1 text-xs text-red-500">
           {helperText}
         </p>
       )}
       {!hideError && error && (
-        <p color="danger" className="mt-1 text-xs">
+        <p color="danger" className="mt-1 text-xs text-red-500">
           {error?.message?.toString()}
         </p>
       )}
