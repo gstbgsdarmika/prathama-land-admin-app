@@ -114,7 +114,7 @@ export default function DropzoneInput({
     onDrop,
     accept,
     maxFiles,
-    maxSize: 1000000,
+    maxSize: 5000000,
   });
 
   return (
@@ -191,7 +191,7 @@ export default function DropzoneInput({
                 </p>
               )}
               {!hideError && error && (
-                <p color="danger" className="mt-1 text-xs">
+                <p color="danger" className="mt-1 text-xs text-red-500">
                   {error?.message?.toString()}
                 </p>
               )}
@@ -199,7 +199,7 @@ export default function DropzoneInput({
                 <ul className="mt-1 border border-gray-300 divide-y divide-gray-300 rounded-lg">
                   {files.map((file, index) => (
                     <FilePreview
-                      key={index.id}
+                      key={index}
                       readOnly={readOnly}
                       file={file}
                       deleteFile={deleteFile}

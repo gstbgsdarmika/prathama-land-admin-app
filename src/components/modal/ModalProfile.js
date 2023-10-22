@@ -1,6 +1,7 @@
 import { Fragment } from 'react';
 import { Popover, Transition } from '@headlessui/react';
 import { HiOutlineUserCircle, HiOutlineMailOpen, HiOutlineLogout } from 'react-icons/hi';
+import { signOutUser } from '../../auth/auth';
 import user from '../../assets/img/user.png';
 
 const solutions = [
@@ -14,14 +15,16 @@ const solutions = [
     href: '/inbox',
     icon: IconTwo,
   },
-  {
-    name: 'Keluar',
-    href: '/login',
-    icon: IconThree,
-  },
 ];
 
 export default function ModalProfile() {
+  const handleSignOut = async () => {
+    try {
+      await signOutUser();
+    } catch (error) {
+      console.error('Error signing out', error);
+    }
+  };
   return (
     <div>
       <Popover className="relative">
@@ -55,16 +58,16 @@ export default function ModalProfile() {
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 translate-y-1"
             >
-              <Popover.Panel className="absolute left-1/2 z-10 mt-1 -translate-x-1/2 transform lg:max-w-3xl min-w-full">
-                <div className="overflow-hidden rounded-lg border shadow-sm">
-                  <div className=" grid gap-2 bg-white p-1">
+              <Popover.Panel className="absolute z-10 min-w-full mt-1 transform -translate-x-1/2 left-1/2 lg:max-w-3xl">
+                <div className="overflow-hidden border rounded-lg shadow-sm">
+                  <div className="grid gap-2 p-1 bg-white ">
                     {solutions.map((item) => (
                       <a
                         key={item.name}
                         href={item.href}
-                        className="flex items-center gap-x-4 rounded-sm transition duration-150 ease-in-out px-5 py-1 hover:bg-gray-100 focus:outline-none"
+                        className="flex items-center px-5 py-1 transition duration-150 ease-in-out rounded-sm gap-x-4 hover:bg-gray-100 focus:outline-none"
                       >
-                        <div className="flex text-2xl shrink-0 items-center justify-center text-gray-500">
+                        <div className="flex items-center justify-center text-2xl text-gray-500 shrink-0">
                           <item.icon aria-hidden="true" />
                         </div>
                         <div className="">
@@ -74,6 +77,21 @@ export default function ModalProfile() {
                         </div>
                       </a>
                     ))}
+                    <a
+                      key="Keluar"
+                      href="/login"
+                      onClick={handleSignOut}
+                      className="flex items-center px-5 py-1 transition duration-150 ease-in-out rounded-sm gap-x-4 hover:bg-gray-100 focus:outline-none"
+                    >
+                      <div className="flex items-center justify-center text-2xl text-gray-500 shrink-0">
+                        <IconThree aria-hidden="true" />
+                      </div>
+                      <div className="">
+                        <p className="text-sm font-medium text-gray-900">
+                          Keluar
+                        </p>
+                      </div>
+                    </a>
                   </div>
                 </div>
               </Popover.Panel>

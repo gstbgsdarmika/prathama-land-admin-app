@@ -1,30 +1,59 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FormProvider, useForm } from 'react-hook-form';
+import swal from 'sweetalert2';
+import { ref, push } from 'firebase/database';
+import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
 import Input from '../../components/forms/Input';
 import Button from '../../components/buttons/Button';
 import TextArea from '../../components/forms/TextArea';
-import { properties } from '../../utils/data';
+import DropzoneInput from '../../components/forms/DropzoneInput';
+import { database, storage } from '../../utils/firebase';
 
 export default function NewProperty() {
   const methods = useForm();
   const navigate = useNavigate();
 
-  const onSubmit = (data) => {
-    const newProperty = {
-      id: properties.length + 1,
-      name: data.name,
-      address: data.address,
-      description: data.description,
-      price: data.price,
-      area: data.area,
-      accessRoad: data.accessRoad,
-      landCertificate: data.landCertificate,
-      image: null,
-    };
+  const uploadImage = async (file) => {
+    const timestamp = new Date().getTime();
+    const randomString = Math.random().toString(36).substring(2, 8);
+    const fileName = `image_${timestamp}_${randomString}.jpg`;
+    const storageRe = storageRef(storage, `images/${fileName}`);
+    await uploadBytes(storageRe, file);
+    const downloadURL = await getDownloadURL(storageRe);
+    return downloadURL;
+  };
 
-    properties.push(newProperty);
-    navigate('/daftar-properti');
+  const onSubmit = async (data) => {
+    try {
+      const imageUrl = await uploadImage(data.image[0]);
+      const propertiesRef = ref(database, 'daftar-properti');
+      push(propertiesRef, {
+        name: data.name,
+        address: data.address,
+        description: data.description,
+        price: data.price,
+        area: data.area,
+        accessRoad: data.accessRoad,
+        type: data.type,
+        landCertificate: data.landCertificate,
+        image: imageUrl,
+      }).then(() => {
+        swal.fire({
+          icon: 'success',
+          title: 'Sukses!',
+          text: 'Data berhasil diunggah.',
+        });
+        navigate('/daftar-properti');
+      });
+    } catch (error) {
+      swal.fire({
+        icon: 'error',
+        title: 'Kesalahan!',
+        text: 'Terjadi kesalahan saat mengunggah gambar atau menyimpan data.',
+      });
+      console.error('Error saat mengunggah gambar atau menyimpan data:', error);
+    }
   };
 
   return (
@@ -83,7 +112,15 @@ export default function NewProperty() {
             label="Sertifikat"
             validation={{ required: 'Sertifikat tidak boleh kosong' }}
           />
-
+          <div className="max-w-sm">
+            <DropzoneInput
+              id="image"
+              label="Gambar (Ukuran Banner harus 3:1)"
+              validation={{ required: 'Photo must be filled' }}
+              accept={{ 'image/*': ['.png', '.jpg', '.jpeg'] }}
+              helperText="Anda bisa mengupload file .png, .jpg, atau .jpeg, maksimal 300KB"
+            />
+          </div>
           <div className="flex flex-wrap justify-end gap-2 mt-5 md:mt-10 md:gap-4">
             <Link to="/daftar-properti">
               <Button variant="outline">Kembali</Button>

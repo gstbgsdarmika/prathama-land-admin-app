@@ -1,40 +1,125 @@
-import * as React from 'react';
+import React from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { FormProvider, useForm } from 'react-hook-form';
+import { ref, get, update } from 'firebase/database';
+import {
+  ref as storageRef, uploadBytes, getDownloadURL, deleteObject,
+} from 'firebase/storage';
+import Swal from 'sweetalert2';
 import Input from '../../components/forms/Input';
 import Button from '../../components/buttons/Button';
 import TextArea from '../../components/forms/TextArea';
-import { properties } from '../../utils/data';
+import DropzoneInput from '../../components/forms/DropzoneInput';
+import { database, storage } from '../../utils/firebase';
 
 export default function Property({ isEditable }) {
   const methods = useForm();
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const propertyIndex = properties.findIndex((prop) => prop.id === Number(id));
+  const [property, setProperty] = React.useState(null);
 
-  if (propertyIndex === -1) {
-    return <div>Data properti tidak ditemukan</div>;
-  }
-  const property = properties[propertyIndex];
+  React.useEffect(() => {
+    const propertyRef = ref(database, `daftar-properti/${id}`);
+    get(propertyRef).then((snapshot) => {
+      if (snapshot.exists()) {
+        const propertyData = snapshot.val();
+        setProperty(propertyData);
+      } else {
+        console.log('Data properti tidak ditemukan');
+      }
+    }).catch((error) => {
+      console.error('Error:', error);
+    });
+  }, [id]);
 
-  const onSubmit = (data) => {
-    const updatedProperty = {
-      id: data.id,
-      name: data.name,
-      address: data.address,
-      description: data.description,
-      price: data.price,
-      area: data.area,
-      accessRoad: data.accessRoad,
-      landCertificate: data.landCertificate,
-      image: null,
-    };
-
-    const updatedProperties = [...properties];
-    updatedProperties[propertyIndex] = updatedProperty;
-    navigate('/daftar-properti');
+  const uploadImage = async (file) => {
+    try {
+      const timestamp = new Date().getTime();
+      const randomString = Math.random().toString(36).substring(2, 8);
+      const fileName = `image_${timestamp}_${randomString}.jpg`;
+      const storageRe = storageRef(storage, `images/${fileName}`);
+      await uploadBytes(storageRe, file);
+      const downloadURL = await getDownloadURL(storageRe);
+      return downloadURL;
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      throw error;
+    }
   };
+
+  const updateImage = async (file) => {
+    try {
+      const oldImageUrl = property.image;
+      if (oldImageUrl) {
+        const fileName = oldImageUrl.split('/').pop();
+        const storageRefToDelete = storageRef(storage, `images/${fileName}`);
+        try {
+          const snapshot = await get(storageRefToDelete);
+          if (snapshot.exists()) {
+            await deleteObject(storageRefToDelete);
+          } else {
+            console.warn('Objek tidak ditemukan di Firebase Storage');
+          }
+        } catch (deleteError) {
+          console.error('Error deleting old image:', deleteError);
+        }
+      }
+      const imageUrl = await uploadImage(file, file.name);
+      return imageUrl;
+    } catch (error) {
+      console.error('Error updating image:', error);
+      throw error;
+    }
+  };
+
+  const onSubmit = async (data) => {
+    try {
+      const confirmed = await Swal.fire({
+        icon: 'warning',
+        title: 'Konfirmasi',
+        text: 'Apakah Anda yakin ingin mengubah data ini?',
+        showCancelButton: true,
+        confirmButtonText: 'Ya',
+        cancelButtonText: 'Tidak',
+      });
+      if (confirmed.isConfirmed) {
+        let imageUrl = property.image;
+        if (data.image && data.image[0]) {
+          imageUrl = await updateImage(data.image[0]);
+        }
+        const propertyRef = ref(database, `daftar-properti/${id}`);
+        await update(propertyRef, {
+          name: data.name || '',
+          address: data.address || '',
+          description: data.description || '',
+          price: data.price || '',
+          area: data.area || '',
+          accessRoad: data.accessRoad || '',
+          type: data.type || '',
+          landCertificate: data.landCertificate || '',
+          image: imageUrl || '',
+        });
+        Swal.fire({
+          icon: 'success',
+          title: 'Sukses!',
+          text: 'Data berhasil diubah.',
+        });
+        navigate('/daftar-properti');
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Kesalahan!',
+        text: 'Terjadi kesalahan saat mengubah data.',
+      });
+      console.error('Error:', error);
+    }
+  };
+
+  if (!property) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <section>
@@ -55,61 +140,74 @@ export default function Property({ isEditable }) {
           <Input
             id="name"
             label="Nama"
+            disabled={!isEditable}
             defaultValue={property.name}
-            disabled={!isEditable} // Ganti disabled berdasarkan isEditable
             validation={{ required: 'Nama tidak boleh kosong' }}
           />
           <Input
             id="address"
             label="Alamat"
-            defaultValue={property.address}
             disabled={!isEditable}
+            defaultValue={property.address}
             validation={{ required: 'Alamat tidak boleh kosong' }}
           />
           <TextArea
             id="description"
             label="Deskripsi"
-            defaultValue={property.description}
             disabled={!isEditable}
+            defaultValue={property.description}
             validation={{ required: 'Deskripsi tidak boleh kosong' }}
           />
 
           <Input
             id="price"
             label="Harga"
-            defaultValue={property.price}
             disabled={!isEditable}
+            defaultValue={property.price}
             validation={{ required: 'Harga tidak boleh kosong' }}
           />
           <Input
             id="area"
             label="Luas"
-            defaultValue={property.area}
             disabled={!isEditable}
+            defaultValue={property.area}
             validation={{ required: 'Luas tidak boleh kosong' }}
           />
           <Input
             id="accessRoad"
             label="Akses Jalan"
-            defaultValue={property.accessRoad}
             disabled={!isEditable}
+            defaultValue={property.accessRoad}
             validation={{ required: 'Akses jalan tidak boleh kosong' }}
           />
           <Input
             id="type"
             label="Tipe"
-            defaultValue={property.type}
             disabled={!isEditable}
+            defaultValue={property.type}
             validation={{ required: 'Tipe tidak boleh kosong' }}
           />
           <Input
             id="landCertificate"
             label="Sertifikat"
-            defaultValue={property.landCertificate}
             disabled={!isEditable}
+            defaultValue={property.landCertificate}
             validation={{ required: 'Sertifikat tidak boleh kosong' }}
           />
-
+          <div className="max-w-sm">
+            {!isEditable ? (
+              <img src={property.image} alt="Preview" />
+            ) : (
+              <DropzoneInput
+                id="image"
+                defaultValue={property.image}
+                formId="image_file_id"
+                label="Gambar (Ukuran Banner harus 3:1)"
+                accept={{ 'image/*': ['.png', '.jpg', '.jpeg'] }}
+                helperText="Anda bisa mengupload file .png, .jpg, atau .jpeg, maksimal 300KB"
+              />
+            )}
+          </div>
           <div className="flex flex-wrap justify-end gap-2 mt-5 md:mt-10 md:gap-4">
             <Link to="/daftar-properti">
               <Button variant="outline">Kembali</Button>
