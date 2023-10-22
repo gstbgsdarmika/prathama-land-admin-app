@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { FormProvider, useForm } from 'react-hook-form';
 import { ref, get, update } from 'firebase/database';
@@ -6,6 +6,7 @@ import {
   ref as storageRef, uploadBytes, getDownloadURL, deleteObject,
 } from 'firebase/storage';
 import Swal from 'sweetalert2';
+import { ThreeCircles } from 'react-loader-spinner';
 import Input from '../../components/forms/Input';
 import Button from '../../components/buttons/Button';
 import TextArea from '../../components/forms/TextArea';
@@ -16,8 +17,8 @@ export default function Property({ isEditable }) {
   const methods = useForm();
   const { id } = useParams();
   const navigate = useNavigate();
-
-  const [property, setProperty] = React.useState(null);
+  const [property, setProperty] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   React.useEffect(() => {
     const propertyRef = ref(database, `daftar-properti/${id}`);
@@ -25,11 +26,17 @@ export default function Property({ isEditable }) {
       if (snapshot.exists()) {
         const propertyData = snapshot.val();
         setProperty(propertyData);
+        setIsLoading(true);
       } else {
         console.log('Data properti tidak ditemukan');
       }
     }).catch((error) => {
       console.error('Error:', error);
+      setIsLoading(false);
+    }).finally(() => {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
     });
   }, [id]);
 
@@ -84,6 +91,7 @@ export default function Property({ isEditable }) {
         cancelButtonText: 'Tidak',
       });
       if (confirmed.isConfirmed) {
+        setIsLoading(true);
         let imageUrl = property.image;
         if (data.image && data.image[0]) {
           imageUrl = await updateImage(data.image[0]);
@@ -100,6 +108,7 @@ export default function Property({ isEditable }) {
           landCertificate: data.landCertificate || '',
           image: imageUrl || '',
         });
+        setIsLoading(false);
         Swal.fire({
           icon: 'success',
           title: 'Sukses!',
@@ -108,6 +117,7 @@ export default function Property({ isEditable }) {
         navigate('/daftar-properti');
       }
     } catch (error) {
+      setIsLoading(false);
       Swal.fire({
         icon: 'error',
         title: 'Kesalahan!',
@@ -117,8 +127,12 @@ export default function Property({ isEditable }) {
     }
   };
 
-  if (!property) {
-    return <div>Loading...</div>;
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center w-full h-full">
+        <ThreeCircles color="#4fa94d" height={80} width={80} />
+      </div>
+    );
   }
 
   return (
