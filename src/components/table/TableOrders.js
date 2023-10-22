@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
-import { Hourglass } from 'react-loader-spinner';
+import { ThreeCircles } from 'react-loader-spinner';
 import { orders } from '../../utils/data';
 
 export default function TableOrders({ searchTerm }) {
@@ -46,8 +46,8 @@ export default function TableOrders({ searchTerm }) {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center w-full h-full mt-32">
-        <Hourglass color="#36D7B7" height={80} width={80} />
+      <div className="flex items-center justify-center w-full h-full mt-36">
+        <ThreeCircles color="#4fa94d" height={80} width={80} />
       </div>
     );
   }

@@ -5,7 +5,7 @@ import {
 } from 'react-icons/hi';
 import Swal from 'sweetalert2';
 import { ref, onValue, remove } from 'firebase/database';
-import { Hourglass } from 'react-loader-spinner';
+import { ThreeCircles } from 'react-loader-spinner';
 import { database } from '../../utils/firebase';
 import Button from '../buttons/Button';
 
@@ -91,15 +91,15 @@ export default function TableProperties({ searchKeyword }) {
   return (
     <div>
       {isLoading && (
-      <div className="flex items-center justify-center w-full h-full mt-32">
-        <Hourglass
+      <div className="flex items-center justify-center w-full h-full mt-36">
+        <ThreeCircles
           visible
           height="80"
           width="80"
           ariaLabel="hourglass-loading"
           wrapperStyle={{}}
           wrapperClass=""
-          colors={['#306cce', '#72a1ed']}
+          color="#4fa94d"
         />
       </div>
       )}
