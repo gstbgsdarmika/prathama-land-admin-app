@@ -114,7 +114,7 @@ const Button = React.forwardRef(
             variant === 'ghost' && [
               'text-primary-500',
               'shadow-none',
-              'hover:bg-primary-50 focus-visible:ring-primary-400 active:bg-primary-100 disabled:bg-primary-100',
+              // 'hover:bg-primary-50 focus-visible:ring-primary-400 active:bg-primary-100 disabled:bg-primary-100',
             ],
           ],
           // #endregion  //*======== Variants ===========

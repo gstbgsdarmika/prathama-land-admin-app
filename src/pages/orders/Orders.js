@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import {
   HiOutlineSearch,
 } from 'react-icons/hi';
@@ -8,6 +8,11 @@ import TableOrders from '../../components/table/TableOrders';
 
 function Orders() {
   const methods = useForm();
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
 
   return (
     <section>
@@ -28,13 +33,13 @@ function Orders() {
               placeholder="Cari pesanan"
               validation={{ required: 'Search must be filled' }}
               leftIcon={HiOutlineSearch}
+              value={searchTerm}
+              onChange={handleSearch}
             />
           </FormProvider>
         </div>
       </div>
-      <div className="mt-5 md:overflow-x-auto md:shadow-md md:mt-10 md:rounded-lg">
-        <TableOrders />
-      </div>
+      <TableOrders searchTerm={searchTerm} />
     </section>
   );
 }

@@ -2,6 +2,10 @@ import img1 from '../assets/img/property/image 1.jpg';
 import img2 from '../assets/img/property/image 2.jpg';
 import img3 from '../assets/img/property/image 3.jpg';
 import img4 from '../assets/img/property/image 4.jpg';
+import img5 from '../assets/img/property/image 5.jpg';
+import img6 from '../assets/img/property/image 6.jpg';
+import img7 from '../assets/img/property/image 7.jpg';
+import img8 from '../assets/img/property/image 8.jpg';
 
 export const properties = [
   {
@@ -18,7 +22,7 @@ export const properties = [
   },
   {
     id: 2,
-    image: img2,
+    image: img8,
     name: 'Apartemen Megah Sentral',
     price: '1.200.000.000',
     type: 'Apartemen',
@@ -30,7 +34,7 @@ export const properties = [
   },
   {
     id: 3,
-    image: img3,
+    image: img2,
     name: 'Tanah Kebun Subur',
     price: '500.000.000',
     type: 'Tanah',
@@ -42,7 +46,7 @@ export const properties = [
   },
   {
     id: 4,
-    image: img4,
+    image: img5,
     name: 'Rumah Nyaman Asri',
     price: '3.800.000.000',
     type: 'Rumah',
@@ -54,7 +58,7 @@ export const properties = [
   },
   {
     id: 5,
-    image: img1,
+    image: img8,
     name: 'Apartemen Vista Indah',
     price: '1.800.000.000',
     type: 'Apartemen',
@@ -66,7 +70,7 @@ export const properties = [
   },
   {
     id: 6,
-    image: img2,
+    image: img6,
     name: 'Ruko Bisnis Makmur',
     price: '4.000.000.000',
     type: 'Ruko',
@@ -78,7 +82,7 @@ export const properties = [
   },
   {
     id: 7,
-    image: img3,
+    image: img4,
     name: 'Kebun Jeruk Cerah',
     price: '600.000.000',
     type: 'Kebun',
@@ -90,7 +94,7 @@ export const properties = [
   },
   {
     id: 8,
-    image: img4,
+    image: img7,
     name: 'Apartemen Elit Sentral',
     price: '2.800.000.000',
     type: 'Apartemen',
@@ -102,7 +106,7 @@ export const properties = [
   },
   {
     id: 9,
-    image: img2,
+    image: img1,
     name: 'Rumah Asri Damai',
     price: '1.600.000.000',
     type: 'Rumah',
@@ -114,7 +118,7 @@ export const properties = [
   },
   {
     id: 10,
-    image: img4,
+    image: img3,
     name: 'Kos Strategis Megah',
     price: '700.000.000',
     type: 'Kos',
@@ -123,5 +127,80 @@ export const properties = [
     address: 'Jl. Megah No. 12, Kota Megah',
     accessRoad: 'Akses dekat dengan transportasi umum',
     landCertificate: 'SHGB',
+  },
+];
+
+export const orders = [
+  {
+    id: 1,
+    property: 'Komersial Malang',
+    customer: 'Dollie Bullock',
+    price: '1,800,000,000',
+    payment: 'Credit Card',
+    status: 'Menunggu',
+    date: '2016/02/23 15:50:23',
+  },
+  {
+    id: 2,
+    property: 'Bumi Indah',
+    customer: 'Merrill Richardson',
+    price: '600.000.000',
+    payment: 'Check',
+    status: 'Berhasil',
+    date: '2016/02/23 15:50:23',
+  },
+  {
+    id: 3,
+    property: 'Batu Highlands',
+    customer: 'Serena Glover',
+    price: '800.000.000',
+    payment: 'Credit Card',
+    status: 'Error',
+    date: '2016/02/23 15:50:23',
+  },
+  {
+    id: 4,
+    property: 'Cemara Indah',
+    customer: 'Dianne Prince',
+    price: '1.00.000.000',
+    payment: 'Credit Card',
+    status: 'Menunggu',
+    date: '2016/02/23 15:50:23',
+  },
+  {
+    id: 5,
+    property: 'Sumber Makmur',
+    customer: 'Dollie Bullock',
+    price: '3.300.000.000',
+    payment: 'Check',
+    status: 'Berhasil',
+    date: '2016/02/23 15:50:23',
+  },
+  {
+    id: 6,
+    property: 'Komersial Malang ',
+    customer: 'Dollie Bullock',
+    price: '1,800,000,000',
+    payment: 'Credit Card',
+    status: 'Error',
+    date: '2016/02/23 15:50:23',
+  },
+  {
+    id: 7,
+    property: 'Komersial Malang ',
+    customer: 'Dollie Bullock',
+    price: '1,800,000,000',
+    payment: 'Credit Card',
+    status: 'Error',
+    date: '2016/02/23 15:50:23',
+  },
+  {
+    id: 8,
+    property: 'Komersial Malang ',
+    customer: 'Dollie Bullock',
+    price: '1,800,000,000',
+    payment: 'Credit Card',
+    status: 'Error',
+    date: '2016/02/23 15:50:23',
   },
 ];

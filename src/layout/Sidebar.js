@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import {
@@ -12,8 +13,16 @@ import logo from '../assets/logo.svg';
 import Dropdown from '../components/dropdown/Dropdown';
 import IconButton from '../components/buttons/IconButton';
 import NavigationLink from '../components/link/NavigationLink';
+import { signOutUser } from '../auth/auth';
 
 function Sidebar({ isSidebarOpen, setIsSidebarOpen }) {
+  const handleSignOut = async () => {
+    try {
+      await signOutUser();
+    } catch (error) {
+      console.error('Error signing out', error);
+    }
+  };
   return (
     <aside
       id="sidebar-multi-level-sidebar"
@@ -50,7 +59,7 @@ function Sidebar({ isSidebarOpen, setIsSidebarOpen }) {
               { id: 1, title: 'Daftar Pemesanan' },
             ]}
           />
-          <li>
+          <li onClick={handleSignOut}>
             <Link
               to="/login"
               className="flex items-center p-2 text-white rounded-lg hover:bg-green-700"
